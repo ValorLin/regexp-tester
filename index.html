@@ -50,13 +50,14 @@
     <ul class="test-cases no-bullet">
         <li ng-repeat="testCase in testCases" class="case row collapse">
             <div class="small-10 columns">
-                <input type="text" ng-model="testCase.text"/>
+                <input type="text" ng-model="testCase.text" ng-change="onTestCaseChange(testCase)"/>
             </div>
             <div class="small-2 columns">
                 <span class="postfix {{testCase.status}}">{{testCase.status}}</span>
             </div>
         </li>
     </ul>
+    <input class="button" type="button" value="Save Regular Expression"/>
 </div>
 <script type="text/javascript" src="./bower_components/underscore/underscore.js"></script>
 <script type="text/javascript" src="./js/main.js"></script>

@@ -1,20 +1,23 @@
 angular.module('RegexpTester', ['LocalStorageModule'])
     .controller('MainController', ['$scope', 'localStorageService', function ($scope, localStorageService) {
-        $scope.testCases = [];
-        localStorageService.bind($scope, 'testCases', $scope.testCases);
+        var myRegexps = $scope.myRegexps = [];
+        var currRegexp = $scope.currRegexp = myRegexps[0] || {};
+        var currTestCases = $scope.currTestCases = [];
+
+        localStorageService.bind($scope, 'myRegexps', $scope.myRegexps);
 
         $scope.addTestCase = function () {
-            var text = $scope.testCaseText.trim();
+            var text = currRegexp.newTestCaseText.trim();
             if (text == '') return;
-            $scope.testCases.push({text: text, status: ''});
-            $scope.testCaseText = '';
+            currTestCases.push({text: text, status: ''});
+            $scope.newTestCaseText = '';
             this.testAll();
         };
 
         $scope.testAll = function () {
             var re = new RegExp($scope.regexp, 'g');
 
-            _.each($scope.testCases, function (testCase) {
+            _.each(currTestCases, function (testCase) {
                 re.lastIndex = 0;
                 if (re.test(testCase.text)) {
                     testCase.status = 'success';
@@ -22,5 +25,15 @@ angular.module('RegexpTester', ['LocalStorageModule'])
                     testCase.status = 'fail';
                 }
             });
+        };
+
+        $scope.onTestCaseChange = function (testCase) {
+            if (testCase.text === '') {
+                this.removeTestCase(testCase);
+            }
+        };
+
+        $scope.removeTestCase = function (testCase) {
+            currTestCases.splice(currTestCases.indexOf(testCase), 1);
         };
     }]);
