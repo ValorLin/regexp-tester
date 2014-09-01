@@ -7,7 +7,7 @@ angular.module('RegexpTester', ['LocalStorageModule'])
         localStorageService.bind($scope, 'myRegexps', $scope.myRegexps);
 
         $scope.addTestCase = function () {
-            var text = currRegexp.newTestCaseText.trim();
+            var text = $scope.newTestCaseText.trim();
             if (text == '') return;
             currTestCases.push({text: text, status: ''});
             $scope.newTestCaseText = '';
