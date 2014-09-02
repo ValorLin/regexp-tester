@@ -1,10 +1,8 @@
 angular.module('RegexpTester', ['LocalStorageModule'])
     .controller('MainController', ['$scope', 'localStorageService', function ($scope, localStorageService) {
-        var myRegexps = $scope.myRegexps = [];
-        var currRegexp = $scope.currRegexp = myRegexps[0] || {};
         var currTestCases = $scope.currTestCases = [];
-
-        localStorageService.bind($scope, 'myRegexps', $scope.myRegexps);
+        localStorageService.bind($scope, 'regexp', $scope.regexp);
+        localStorageService.bind($scope, 'currTestCases', $scope.currTestCases);
 
         $scope.addTestCase = function () {
             var text = $scope.newTestCaseText.trim();
